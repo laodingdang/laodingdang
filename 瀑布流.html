@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html,body {
+            height: 100%;
+        }
+        .main {
+            width: 1200px;
+            height: 100%;
+            box-sizing: border-box;
+            border: 1px solid #000;
+            margin: 0 auto;
+            overflow: scroll;
+            position: relative;
+        }
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        .box {
+            width: 200px;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div class="main" id="main">
+    </div>
+</body>
+<script>
+    var main = document.getElementById("main");
+    createDiv()
+    
+    // 创建元素 并添加
+    function createDiv() {
+        for(let i = 0; i < 20; i++) {
+            var oDiv = document.createElement("div");
+            oDiv.className = "box";
+            oDiv.style.height = Height();
+            oDiv.style.backgroundColor = Color();
+            main.appendChild(oDiv)
+        }
+        change();
+    }
+
+    // 计算瀑布流属性
+    function change() {
+        // 获取盒子宽度 
+        var w = main.clientWidth;
+        // 计算一行能放下多少个盒子
+        var n = Math.floor(w / 210);
+        // 计算盒子左右边距
+        var lr = (w - n * 210) / 2;
+        // 获取所有的盒子
+        var box = document.getElementsByClassName("box");
+        // 声明一个空数组 保存每次累加盒子的高度
+        var arr = [];
+        for(var i = 0; i < box.length; i++) {
+            // 计算第二行的top值和left值
+            if(arr.length >= n) {
+                // 最低盒子的下标
+                var min = minIndex(arr);
+                // 给最低盒子重新定义一个新盒子的top值
+                box[i].style.top = arr[min] + 10 + "px";
+                // 同上 再重新定义一个left值
+                box[i].style.left = lr + 210*min + "px";
+                // 求出最低盒子和新盒子的总高度
+                arr[min] += box[i].offsetHeight + 10;
+            }else {
+                // 保存第一排的高度
+                arr[i] = box[i].offsetHeight;
+                // 赋予第一排的top值
+                box[i].style.top = 0;
+                // 赋予第一排的left值
+                box[i].style.left = lr + 210 * i + "px";
+            }
+        }
+    }
+    
+    // 随机颜色
+    function Color(){
+        this.r = Math.floor(Math.random()*255);
+        this.g = Math.floor(Math.random()*255);
+        this.b = Math.floor(Math.random()*255);
+        return 'rgba('+ this.r +','+ this.g +','+ this.b +',0.8)';
+    }
+
+    // 随机整数
+    function Height(){
+        return Math.floor(Math.random()*300+100) + "px";
+    }
+
+    // 计算数组内最矮元素的下标
+    function minIndex(arr){
+        var m = 0;
+        for(var i = 0; i < arr.length; i++) {
+            m = Math.min(arr[m], arr[i]) == arr[m]?m:i;
+        }
+        return m;
+    }
+
+    // 自适应
+    window.onresize = function (){
+        change();
+    }
+
+    // 瀑布流 懒加载
+    main.onscroll = function() {
+        // 获取可见高度
+        var h = main.clientHeight;
+        // 获取滚动条Y坐标
+        var sh = main.scrollTop;
+        // 获取元素内容总高度
+        var mh = main.scrollHeight;
+        if(h + sh > mh - 20) {
+            setTimeout(() => {
+                createDiv();
+            },1000)
+        }
+    }
+</script>
+</html>
