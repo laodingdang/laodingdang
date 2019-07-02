@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    let arr = [1,1,3,4,1,2,3,6,8,4,2,8,6,9];
+    let unique1 = function(arr) {
+        let hashTable = {};
+        let data = [];
+        for(let i=0, l=arr.length; i < l; i++) {
+            if(!hashTable[arr[i]]) {
+                hashTable[arr[i]] = true;
+                data.push(arr[i])
+            }
+        }
+        return data
+    }
+
+    let unique2 = function(arr){
+        let data = [];
+        for(let i = 0, l = arr.length; i < l; i++){
+            if(data.indexOf(arr[i]) == -1) {
+                data.push(arr[i])
+            }
+        }
+        return data;
+    }
+
+    let unique3 = function(arr){
+        arr.sort();
+        let data = [arr[0]];
+        for (let i = 1, l = arr.length; i < l; i++) {
+            if(arr[i]!=data[data.length-1]){
+                data.push(arr[i]);
+            }
+        }
+        return data;
+    }
+    
+    // ES7方法
+    let unique4 = function(arr) {
+        let data = [];
+        for(let i = 0, l = arr.length; i < l; i++) {
+            if(!data.includes(arr[i])) {
+                data.push(arr[i])
+            }
+        }
+        return data;
+    }
+    console.log("ES5:",unique1(arr))
+    console.log("ES5:",unique2(arr))
+    console.log("ES5:",unique3(arr))
+    console.log("ES6:",Array.from(new Set(arr)))
+    console.log("ES7:",unique4(arr))
+</script>
+</html>
