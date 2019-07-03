@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+let url = "https://apis.map.qq.com/ws/district/v1/list";
+// 原生ajax 获取腾讯地图API数据
+// 获取结果跨域
+function oAjax(url) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET",url,true);
+    xhr.send({key:"X57BZ-DIE3U-TOOVI-2V65X-M2P3T-JFFKX"});
+    xhr.onreadystatechange = () => {
+        if(xhr.readyState == 4 && xhr.status == 200) {
+            let str = responseText;
+            console.log(str)
+        }
+    }
+}
+
+// jquery ajax + jsonp 
+function getIpLocation(url){
+    var data = {　　　　　　
+            key: "X57BZ-DIE3U-TOOVI-2V65X-M2P3T-JFFKX"
+        }
+    data.output = "jsonp";
+    $.ajax({
+        type: "get",
+        dataType: 'jsonp',
+        data: data,
+        jsonp: "callback",
+        jsonpCallback: "callback",
+        url: url,
+        success: function(json) {
+            console.log(json)
+        },
+        error: function(err) {
+            console.log(err)
+        }
+    });
+}
+
+</script>
+</html>
