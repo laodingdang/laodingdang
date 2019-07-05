@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+// 定义一个数组
+let arr = [3,2,1,6,5,4];
+let len = arr.length;
+// 进行冒泡排序
+for(var i = 0; i < len - 1; i++) {
+    for( var j = 0; j < len - 1 - i; j++) {
+        // 相邻元素做比较,条件成立后交换位置,前者元素小于后者元素则交换二者位置
+        if(arr[j] < arr[j + 1]) {
+            //声明一个新变量 赋值为arr[j]
+            let temp = arr[j];
+            // 赋值完成后 将arr[j] 赋值为 arr[j+1]的值
+            arr[j] = arr[j + 1];
+            // 然后将arr[j+1] 赋值为 提前定义的新变量的值 完成替换
+            arr[j + 1] = temp;
+        }
+    }
+}
+</script>
+</html>
