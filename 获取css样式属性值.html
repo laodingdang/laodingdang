@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+</body>
+<script>
+    let oBox = document.getElementsByClassName("box")[0];
+    let getStyle = (t) => {
+        return t.currentStyle ? t.currentStyle : document.defaultView.getComputedStyle(t, null);
+    }
+    console.log(getStyle(oBox).fontSize)
+</script>
+</html>
